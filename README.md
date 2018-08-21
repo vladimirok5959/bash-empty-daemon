@@ -51,7 +51,7 @@ Daemon stoped
 ```
 
 ```
-./run.sh once**
+./run.sh once
 ```
 Will run script in non deamon mode. This is easy way to debug daemon body in file `loop.sh`, also you can simply shutdown daemon by pressing **Ctrl+C**.
 
