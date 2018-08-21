@@ -113,6 +113,7 @@ fi
 
 if [ -f "/tmp/command2.txt" ]; then
 	rm /tmp/command2.txt
-	ssh -p 22 user@slave-server-1.com 'cd /tmp; mkdir daemon; cd daemon; mkdir test; cd test; touch test'
+	ssh -p 22 user@slave-server-1.com 'cd /tmp; mkdir daemon;'
+	ssh -p 22 user@slave-server-1.com 'cd /tmp/daemon; mkdir test; cd test; touch test'
 fi
 ```
