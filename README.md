@@ -50,25 +50,24 @@ Loop. Every one second. Do something here...
 Daemon stoped
 ```
 
-**./run.sh once**
+**./run.sh once**  
 Will run script in non deamon mode. This is easy way to debug daemon body in file `loop.sh`, also you can simply shutdown daemon by pressing **Ctrl+C**.
 
-**./run.sh start**
+**./run.sh start**  
 Will run in daemon mode and you can safety close remote ssh connection.
 
-**./run.sh stop**
+**./run.sh stop**  
 Will stop daemon.
 
-**./run.sh status**
+**./run.sh status**  
 Will show if daemon runned currently on not.
 
 ## Where I can put my code?
 Look into file `loop.sh`:
-```
+```bash
 #!/bin/sh
 
 # Main daemon body
 echo "Loop. Every one second. Do something here..."
 ```
 Contents of this file will be fired every second and each time.
-
