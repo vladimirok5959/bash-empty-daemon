@@ -117,3 +117,5 @@ if [ -f "/tmp/command2.txt" ]; then
 	ssh -p 22 user@slave-server-1.com 'cd /tmp/daemon; mkdir test; cd test; touch test'
 fi
 ```
+
+You can easy make auto deploy for GIT for example or something else. Enjoy.
