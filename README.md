@@ -79,3 +79,40 @@ Look into file `loop.sh`:
 echo "Loop. Every one second. Do something here..."
 ```
 Contents of this file will be fired every second and each time.
+
+## Examples?
+
+1. Check for command on master server via file and create in `/tmp` dir on slave server file `time.txt` with time from master server.
+```bash
+#!/bin/sh
+
+if [ -f "/tmp/command1.txt" ]; then
+	# Need to remove this file, because script will be run this command every second
+	rm /tmp/command1.txt
+
+	# Simple write some to log file
+	log_str "1" "I recive command 1!"
+
+	# Create test file
+	echo "$(date '+%F %T')" > /tmp/time.txt
+
+	# Copy file to remote server
+	scp -P 22 /tmp/time.txt user@slave-server-1.com:/tmp/time.txt
+
+	# Delete created file on master
+	rm /tmp/time.txt
+
+	# Write to logs
+	log_str "1" "Command 1 is done!"
+fi
+```
+
+2. Check for command and make some simple changes on slave server.
+```bash
+#!/bin/sh
+
+if [ -f "/tmp/command2.txt" ]; then
+	rm /tmp/command2.txt
+	ssh -p 22 user@slave-server-1.com 'cd /tmp; mkdir daemon; cd daemon; mkdir test; cd test; touch test'
+fi
+```
