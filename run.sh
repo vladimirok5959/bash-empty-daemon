@@ -2,6 +2,13 @@
 
 SETT_DAEMON_MODE=1
 SETT_DAEMON_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
+
+# Get real directory if symlink used
+if [ -L "${BASH_SOURCE[0]}" ]; then
+	realfile=`readlink -f "${BASH_SOURCE[0]}"`
+	SETT_DAEMON_PATH="$(dirname $realfile)"
+fi
+
 SETT_DAEMON_FOLDER_LOGS="$SETT_DAEMON_PATH/logs"
 SETT_DAEMON_LOGS_WORK_FILE="$SETT_DAEMON_FOLDER_LOGS/all.log"
 SETT_DAEMON_PID_FILE="$SETT_DAEMON_PATH/pid"
