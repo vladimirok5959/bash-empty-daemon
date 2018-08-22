@@ -117,7 +117,7 @@ if [ -f "/tmp/command2.txt" ]; then
 	ssh -p 22 user@slave-server-1.com 'cd /tmp/daemon; mkdir test; cd test; touch test'
 fi
 ```
-<br>
+
 Tested on Linux Debian and Mac OS X High Sierra.  
 You can easy make auto deploy for GIT for example or something else.  
 You can use [bash-daemon-maker](https://github.com/vladimirok5959/bash-daemon-maker) to assembly and install your daemon in less one minute. Enjoy.
