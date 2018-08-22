@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 SETT_DAEMON_MODE=1
 SETT_DAEMON_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"

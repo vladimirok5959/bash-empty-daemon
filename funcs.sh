@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 check_util() {
 	util_name="$1"
