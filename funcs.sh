@@ -28,7 +28,7 @@ get_util() {
 }
 
 is_pid_runned() {
-	resp=`ps aux | grep ".sh start" | grep $1`
+	resp=`ps aux | grep "start" | grep $1`
 	if [ "$resp" != "" ]; then
 		eval "$2='1'"
 	else
