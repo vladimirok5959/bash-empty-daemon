@@ -236,7 +236,7 @@ update() {
 	log_str "0" "Updating almost completed"
 
 	# Complete
-	$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy $SETT_DAEMON_NAME&
+	$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy "$SETT_DAEMON_NAME" "$SETT_DAEMON_STATUS"&
 }
 
 xyzcopy() {
@@ -249,9 +249,15 @@ xyzcopy() {
 	sleep 1
 
 	SETT_DAEMON_NAME="$2"
+	SETT_DAEMON_STATUS="$3"
 
-	log_str "0" "Replacing started... ($SETT_DAEMON_NAME)"
+	log_str "0" "Replacing started... ($SETT_DAEMON_NAME), ($SETT_DAEMON_STATUS)"
+	log_str "0" "SETT_DAEMON_PATH -> ($SETT_DAEMON_PATH)"
+
 	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
+
+	log_str "0" "Clean..."
+	#UTIL_RM -rd "$SETT_DAEMON_PATH/update"
 }
 
 usage() {
