@@ -160,6 +160,10 @@ status() {
 	fi
 }
 
+update() {
+	echo "Update..."
+}
+
 usage() {
 	echo "$0 (once|start|stop|status)"
 }
@@ -177,6 +181,9 @@ case $1 in
 		;;
 	"status")
 		status
+		;;
+	"update")
+		update
 		;;
 	*)
 		usage
