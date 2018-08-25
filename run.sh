@@ -256,16 +256,14 @@ xyzcopy() {
 	SETT_DAEMON_STATUS="$3"
 
 	log_str "0" "Replacing started..."
-
-	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
-	$UTIL_CP -f "$SETT_DAEMON_PATH/update/run.sh" "$SETT_DAEMON_PATH/$SETT_DAEMON_NAME.new.sh"
+	$UTIL_CP -f "$SETT_DAEMON_PATH/update/run.sh" "$SETT_DAEMON_PATH/$SETT_DAEMON_NAME.sh"
 
 	log_str "0" "Clean..."
 	$UTIL_RM -rd "$SETT_DAEMON_PATH/update"
 
 	log_str "0" "Updating completed"
 
-	# Run daemon if needs
+	# Run daemon if was runned
 	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
 		$SETT_DAEMON_PATH/$SETT_DAEMON_NAME.sh start
 	fi
