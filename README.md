@@ -10,7 +10,7 @@ chmod 0744 run.sh
 
 ```
 ./run.sh
-./run.sh (once|start|stop|status)
+./run.sh (once|start|stop|status|update)
 ```
 
 ```
@@ -70,15 +70,20 @@ Will stop daemon.
 ```
 Will show if daemon runned currently on not.
 
+```
+./run.sh update
+```
+Self update. Get the latest daemon template from GIT and update main script. Auto update do not touched user scripts. Can be safety runned. Auto update will stop daemon, make updates and will run daemon automatically, if he was worked before updates.
+
 ## Where I can put my code?
-Look into file `loop.sh`:
+Look into file `scripts/example.sh`:
 ```bash
 #!/bin/sh
 
-# Main daemon body
+# Example
 echo "Loop. Every one second. Do something here..."
 ```
-Contents of this file will be fired every second and each time.
+Contents of this file and of any \*.sh file in `script` folder will be fired every second and each time.
 
 ## Examples?
 
