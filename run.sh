@@ -257,7 +257,7 @@ xyzcopy() {
 	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
 
 	log_str "0" "Clean..."
-	UTIL_RM -rd "$SETT_DAEMON_PATH/update"
+	$UTIL_RM -rd "$SETT_DAEMON_PATH/update"
 
 	log_str "0" "Updating completed"
 
