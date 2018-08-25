@@ -13,8 +13,43 @@ SETT_DAEMON_FOLDER_LOGS="$SETT_DAEMON_PATH/logs"
 SETT_DAEMON_LOGS_WORK_FILE="$SETT_DAEMON_FOLDER_LOGS/all.log"
 SETT_DAEMON_PID_FILE="$SETT_DAEMON_PATH/pid"
 
-# Include funcs
-. "$SETT_DAEMON_PATH/funcs.sh"
+# Additional funcs
+check_util() {
+	util_name="$1"
+	check=`whereis $util_name`
+	if [ "$check" = "" ]; then
+		echo "Error: '$util_name' is not found... Fix error and try again!"
+		exit
+	fi
+}
+
+get_util() {
+	util_name="$1"
+	IS_MAC_OS=`uname -a | grep Darwin`
+	if [ "$IS_MAC_OS" != "" ]; then
+		# Mac OS X
+		resp=`whereis $util_name | awk {'print $1'}`
+		eval "$2='$resp'"
+		return
+	else
+		# Linux
+		resp=`whereis $util_name | awk {'print $2'}`
+		eval "$2='$resp'"
+		return
+	fi
+	eval "$2=''"
+	return
+}
+
+is_pid_runned() {
+	resp=`ps aux | grep "start" | grep $1`
+	if [ "$resp" != "" ]; then
+		eval "$2='1'"
+	else
+		eval "$2='0'"
+	fi
+	return
+}
 
 # Check utils
 check_util "mkdir"
