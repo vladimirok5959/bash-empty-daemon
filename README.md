@@ -83,7 +83,7 @@ Look into file `scripts/example.sh`:
 # Example
 echo "Loop. Every one second. Do something here..."
 ```
-Contents of this file and of any \*.sh file in `script` folder will be fired every second and each time.
+Contents of this file and any of \*.sh file in `script` folder will be fired every second and each time.
 
 ## Examples?
 
