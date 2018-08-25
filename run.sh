@@ -122,6 +122,10 @@ loop() {
 
 start() {
 	check
+	if [ -f "$SETT_DAEMON_PATH/xyzcopy.sh" ]; then
+		sleep 1
+		$UTIL_RM "$SETT_DAEMON_PATH/xyzcopy.sh"
+	fi
 	if [ -f "$SETT_DAEMON_PID_FILE" ]; then
 		_pid=`$UTIL_CAT $SETT_DAEMON_PID_FILE`
 		is_pid_runned "$_pid" rbool
@@ -262,6 +266,9 @@ xyzcopy() {
 	log_str "0" "Updating completed"
 
 	# Run daemon if needs
+	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
+		$SETT_DAEMON_PATH/$SETT_DAEMON_NAME.sh start
+	fi
 }
 
 usage() {
