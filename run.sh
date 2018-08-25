@@ -216,7 +216,7 @@ update() {
 	echo "Downloading..."
 	log_str "0" "Downloading..."
 
-	$UTIL_MKDIR "$SETT_DAEMON_PATH/update"
+	$UTIL_MKDIR "$SETT_DAEMON_PATH/update" > /dev/null
 	$UTIL_WGET -q -O "$SETT_DAEMON_PATH/update/daemon.zip" "https://github.com/vladimirok5959/bash-empty-daemon/releases/download/latest/daemon.zip" > /dev/null
 
 	echo "Extracting..."
@@ -257,7 +257,11 @@ xyzcopy() {
 	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
 
 	log_str "0" "Clean..."
-	#UTIL_RM -rd "$SETT_DAEMON_PATH/update"
+	UTIL_RM -rd "$SETT_DAEMON_PATH/update"
+
+	log_str "0" "Updating completed"
+
+	# Run daemon if needs
 }
 
 usage() {
