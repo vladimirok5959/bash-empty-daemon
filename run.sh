@@ -214,24 +214,44 @@ update() {
 	fi
 
 	echo "Downloading..."
+	log_str "0" "Downloading..."
+
 	$UTIL_MKDIR "$SETT_DAEMON_PATH/update"
 	$UTIL_WGET -q -O "$SETT_DAEMON_PATH/update/daemon.zip" "https://github.com/vladimirok5959/bash-empty-daemon/releases/download/latest/daemon.zip" > /dev/null
 
 	echo "Extracting..."
+	log_str "0" "Extracting..."
+
 	$UTIL_UNZIP -o "$SETT_DAEMON_PATH/update/daemon.zip" -d "$SETT_DAEMON_PATH/update" > /dev/null
 
 	echo "Updating..."
+	log_str "0" "Updating..."
+
 	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
 		$UTIL_CP "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
 		$0 stop
 	fi
 
-	# Replace
+	echo "Updating almost completed"
+	log_str "0" "Updating almost completed"
 
-	echo "Status: ($SETT_DAEMON_STATUS)"
-	echo "SETT_DAEMON_PATH: ($SETT_DAEMON_PATH)"
+	# Complete
+	`"$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy"&` > /dev/null
+}
 
-	echo "Updating completed"
+xyzcopy() {
+	if [ ! -d "$SETT_DAEMON_PATH/update" ]; then
+		log_str "0" "Something wrong, updating not completed!"
+		exit
+	fi
+
+	# Delay before replace
+	sleep 1
+
+	echo "Replacing started..."
+	log_str "0" "Replacing started..."
+
+	
 }
 
 usage() {
@@ -254,6 +274,9 @@ case $1 in
 		;;
 	"update")
 		update
+		;;
+	"xyzcopy")
+		xyzcopy
 		;;
 	*)
 		usage
