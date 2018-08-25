@@ -16,6 +16,7 @@ SETT_DAEMON_PID_FILE="$SETT_DAEMON_PATH/pid"
 # Include funcs
 . "$SETT_DAEMON_PATH/funcs.sh"
 
+# Check utils
 check_util "mkdir"
 check_util "chmod"
 check_util "touch"
@@ -23,6 +24,7 @@ check_util "cat"
 check_util "kill"
 check_util "rm"
 
+# Get real path of each util
 get_util "mkdir" UTIL_MKDIR
 get_util "chmod" UTIL_CHMOD
 get_util "touch" UTIL_TOUCH
