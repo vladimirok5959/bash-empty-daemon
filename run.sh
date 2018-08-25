@@ -236,7 +236,7 @@ update() {
 	log_str "0" "Updating almost completed"
 
 	# Complete
-	`"$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy"&` > /dev/null
+	`$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy&` > /dev/null
 }
 
 xyzcopy() {
@@ -251,7 +251,7 @@ xyzcopy() {
 	echo "Replacing started..."
 	log_str "0" "Replacing started..."
 
-	
+
 }
 
 usage() {
