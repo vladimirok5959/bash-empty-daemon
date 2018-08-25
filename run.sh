@@ -282,7 +282,7 @@ case $1 in
 		update
 		;;
 	"xyzcopy")
-		xyzcopy
+		xyzcopy $1 $2 $3
 		;;
 	*)
 		usage
