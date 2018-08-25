@@ -1,4 +1,8 @@
 #!/bin/bash
 
-# Main daemon body
-echo "Loop. Every one second. Do something here..."
+if [ -d "$SETT_DAEMON_PATH/scripts" ]; then
+	for user_script in $SETT_DAEMON_PATH/scripts/*.sh
+	do
+		. $user_script
+	done
+fi
