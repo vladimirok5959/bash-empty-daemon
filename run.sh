@@ -255,10 +255,10 @@ xyzcopy() {
 	SETT_DAEMON_NAME="$2"
 	SETT_DAEMON_STATUS="$3"
 
-	log_str "0" "Replacing started... ($SETT_DAEMON_NAME), ($SETT_DAEMON_STATUS)"
-	log_str "0" "SETT_DAEMON_PATH -> ($SETT_DAEMON_PATH)"
+	log_str "0" "Replacing started..."
 
 	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
+	$UTIL_CP -f "$SETT_DAEMON_PATH/update/run.sh" "$SETT_DAEMON_PATH/$SETT_DAEMON_NAME.new.sh"
 
 	log_str "0" "Clean..."
 	$UTIL_RM -rd "$SETT_DAEMON_PATH/update"
