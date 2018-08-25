@@ -96,7 +96,7 @@ if [ -f "/tmp/command1.txt" ]; then
 	rm /tmp/command1.txt
 
 	# Simple write some to log file
-	log_str "1" "I recive command 1!"
+	echo "I recive command 1!"
 
 	# Create test file
 	echo "$(date '+%F %T')" > /tmp/time.txt
@@ -108,7 +108,7 @@ if [ -f "/tmp/command1.txt" ]; then
 	rm /tmp/time.txt
 
 	# Write to logs
-	log_str "1" "Command 1 is done!"
+	echo "Command 1 is done!"
 fi
 ```
 
