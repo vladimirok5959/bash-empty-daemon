@@ -14,8 +14,24 @@ SETT_DAEMON_LOGS_WORK_FILE="$SETT_DAEMON_FOLDER_LOGS/all.log"
 SETT_DAEMON_PID_FILE="$SETT_DAEMON_PATH/pid"
 
 # Additional funcs
+get_os() {
+	IS_MAC_OS=`uname -a | grep Darwin`
+	if [ "$IS_MAC_OS" != "" ]; then
+		eval "$1='mac'"
+	else
+		eval "$1='linux'"
+	fi
+}
+
 check_util() {
 	util_name="$1"
+	
+	# Skip for mac
+	get_os IS_MAC_OS
+	if [ "$util_name" = "wget" ] && [ "$IS_MAC_OS" = "mac" ]; then
+		return
+	fi
+
 	check=`whereis $util_name`
 	if [ "$check" = "" ]; then
 		echo "Error: '$util_name' is not found... Fix error and try again!"
@@ -25,14 +41,18 @@ check_util() {
 
 get_util() {
 	util_name="$1"
-	IS_MAC_OS=`uname -a | grep Darwin`
-	if [ "$IS_MAC_OS" != "" ]; then
-		# Mac OS X
+	
+	get_os IS_MAC_OS
+	if [ "$util_name" = "wget" ] && [ "$IS_MAC_OS" = "mac" ]; then
+		eval "$2='wget'"
+		return
+	fi
+
+	if [ "$IS_MAC_OS" = "mac" ]; then
 		resp=`whereis $util_name | awk {'print $1'}`
 		eval "$2='$resp'"
 		return
 	else
-		# Linux
 		resp=`whereis $util_name | awk {'print $2'}`
 		eval "$2='$resp'"
 		return
@@ -58,6 +78,8 @@ check_util "touch"
 check_util "cat"
 check_util "kill"
 check_util "rm"
+check_util "wget"
+check_util "unzip"
 
 # Get real path of each util
 get_util "mkdir" UTIL_MKDIR
@@ -66,6 +88,8 @@ get_util "touch" UTIL_TOUCH
 get_util "cat" UTIL_CAT
 get_util "kill" UTIL_KILL
 get_util "rm" UTIL_RM
+get_util "wget" UTIL_WGET
+get_util "unzip" UTIL_UNZIP
 
 check() {
 	if [ ! -d "$SETT_DAEMON_FOLDER_LOGS" ]; then
