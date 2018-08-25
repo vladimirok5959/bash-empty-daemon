@@ -227,8 +227,8 @@ update() {
 	echo "Updating..."
 	log_str "0" "Updating..."
 
+	$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
 	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
-		$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
 		$0 stop
 	fi
 
