@@ -72,6 +72,8 @@ is_pid_runned() {
 get_os SETT_OS_TYPE
 
 # Check utils
+check_util "cd"
+check_util "cp"
 check_util "mkdir"
 check_util "chmod"
 check_util "touch"
@@ -82,6 +84,8 @@ check_util "wget"
 check_util "unzip"
 
 # Get real path of each util
+get_util "cd" UTIL_CD
+get_util "cp" UTIL_CP
 get_util "mkdir" UTIL_MKDIR
 get_util "chmod" UTIL_CHMOD
 get_util "touch" UTIL_TOUCH
@@ -185,7 +189,49 @@ status() {
 }
 
 update() {
-	echo "Update..."
+	# Get daemon name
+	#SETT_ITERATOR=1
+	#SETT_BUFF_NAME=""
+	#SETT_DAEMON_NAME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+	#while IFS='.' read -ra ARRAY; do
+	#	for i in "${ARRAY[@]}"; do
+	#		if [ "$SETT_ITERATOR" -lt "${#ARRAY[@]}" ]; then
+	#			SETT_BUFF_NAME=$SETT_BUFF_NAME$i
+	#		fi
+	#		SETT_ITERATOR=$((SETT_ITERATOR+1))
+	#	done
+	#done <<< "$SETT_DAEMON_NAME"
+	#if [ "$SETT_BUFF_NAME" != "" ]; then
+	#	SETT_DAEMON_NAME="$SETT_BUFF_NAME"
+	#fi
+
+	# Get daemon status
+	SETT_DAEMON_STATUS=`$0 status`
+	if [ "$SETT_DAEMON_STATUS" != "Daemon is not runned" ]; then
+		SETT_DAEMON_STATUS="1"
+	else
+		SETT_DAEMON_STATUS="0"
+	fi
+
+	echo "Downloading..."
+	$UTIL_MKDIR "$SETT_DAEMON_PATH/update"
+	$UTIL_WGET -q -O "$SETT_DAEMON_PATH/update/daemon.zip" "https://github.com/vladimirok5959/bash-empty-daemon/releases/download/latest/daemon.zip" > /dev/null
+
+	echo "Extracting..."
+	$UTIL_UNZIP -o "$SETT_DAEMON_PATH/update/daemon.zip" -d "$SETT_DAEMON_PATH/update" > /dev/null
+
+	echo "Updating..."
+	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
+		$UTIL_CP "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
+		$0 stop
+	fi
+
+	# Replace
+
+	echo "Status: ($SETT_DAEMON_STATUS)"
+	echo "SETT_DAEMON_PATH: ($SETT_DAEMON_PATH)"
+
+	echo "Updating completed"
 }
 
 usage() {
