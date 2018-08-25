@@ -190,20 +190,20 @@ status() {
 
 update() {
 	# Get daemon name
-	#SETT_ITERATOR=1
-	#SETT_BUFF_NAME=""
-	#SETT_DAEMON_NAME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
-	#while IFS='.' read -ra ARRAY; do
-	#	for i in "${ARRAY[@]}"; do
-	#		if [ "$SETT_ITERATOR" -lt "${#ARRAY[@]}" ]; then
-	#			SETT_BUFF_NAME=$SETT_BUFF_NAME$i
-	#		fi
-	#		SETT_ITERATOR=$((SETT_ITERATOR+1))
-	#	done
-	#done <<< "$SETT_DAEMON_NAME"
-	#if [ "$SETT_BUFF_NAME" != "" ]; then
-	#	SETT_DAEMON_NAME="$SETT_BUFF_NAME"
-	#fi
+	SETT_ITERATOR=1
+	SETT_BUFF_NAME=""
+	SETT_DAEMON_NAME="$(basename "$(test -L "$0" && readlink "$0" || echo "$0")")"
+	while IFS='.' read -ra ARRAY; do
+		for i in "${ARRAY[@]}"; do
+			if [ "$SETT_ITERATOR" -lt "${#ARRAY[@]}" ]; then
+				SETT_BUFF_NAME=$SETT_BUFF_NAME$i
+			fi
+			SETT_ITERATOR=$((SETT_ITERATOR+1))
+		done
+	done <<< "$SETT_DAEMON_NAME"
+	if [ "$SETT_BUFF_NAME" != "" ]; then
+		SETT_DAEMON_NAME="$SETT_BUFF_NAME"
+	fi
 
 	# Get daemon status
 	SETT_DAEMON_STATUS=`$0 status`
@@ -228,7 +228,7 @@ update() {
 	log_str "0" "Updating..."
 
 	if [ "$SETT_DAEMON_STATUS" = "1" ]; then
-		$UTIL_CP "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
+		$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/xyzcopy.sh"
 		$0 stop
 	fi
 
@@ -236,7 +236,7 @@ update() {
 	log_str "0" "Updating almost completed"
 
 	# Complete
-	$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy&
+	$SETT_DAEMON_PATH/xyzcopy.sh xyzcopy $SETT_DAEMON_NAME&
 }
 
 xyzcopy() {
@@ -248,10 +248,10 @@ xyzcopy() {
 	# Delay before replace
 	sleep 1
 
-	echo "Replacing started..."
-	log_str "0" "Replacing started..."
+	SETT_DAEMON_NAME="$2"
 
-
+	log_str "0" "Replacing started... ($SETT_DAEMON_NAME)"
+	#$UTIL_CP -f "$0" "$SETT_DAEMON_PATH/update/run.sh"
 }
 
 usage() {
