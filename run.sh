@@ -12,11 +12,12 @@ fi
 SETT_DAEMON_FOLDER_LOGS="$SETT_DAEMON_PATH/logs"
 SETT_DAEMON_LOGS_WORK_FILE="$SETT_DAEMON_FOLDER_LOGS/all.log"
 SETT_DAEMON_PID_FILE="$SETT_DAEMON_PATH/pid"
+SETT_OS_TYPE="linux"
 
 # Additional funcs
 get_os() {
-	IS_MAC_OS=`uname -a | grep Darwin`
-	if [ "$IS_MAC_OS" != "" ]; then
+	OS_TYPE=`uname -a | grep Darwin`
+	if [ "$OS_TYPE" != "" ]; then
 		eval "$1='mac'"
 	else
 		eval "$1='linux'"
@@ -27,8 +28,7 @@ check_util() {
 	util_name="$1"
 	
 	# Skip for mac
-	get_os IS_MAC_OS
-	if [ "$util_name" = "wget" ] && [ "$IS_MAC_OS" = "mac" ]; then
+	if [ "$util_name" = "wget" ] && [ "$SETT_OS_TYPE" = "mac" ]; then
 		return
 	fi
 
@@ -41,14 +41,11 @@ check_util() {
 
 get_util() {
 	util_name="$1"
-	
-	get_os IS_MAC_OS
-	if [ "$util_name" = "wget" ] && [ "$IS_MAC_OS" = "mac" ]; then
+	if [ "$util_name" = "wget" ] && [ "$SETT_OS_TYPE" = "mac" ]; then
 		eval "$2='wget'"
 		return
 	fi
-
-	if [ "$IS_MAC_OS" = "mac" ]; then
+	if [ "$SETT_OS_TYPE" = "mac" ]; then
 		resp=`whereis $util_name | awk {'print $1'}`
 		eval "$2='$resp'"
 		return
@@ -70,6 +67,9 @@ is_pid_runned() {
 	fi
 	return
 }
+
+# Get OS type
+get_os SETT_OS_TYPE
 
 # Check utils
 check_util "mkdir"
