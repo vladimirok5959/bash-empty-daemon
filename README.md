@@ -1,19 +1,20 @@
 # bash-empty-daemon
+
 Template of empty daemon for Linux on pure bash. Imagine, you need to make auto deploy from one server to another 5 or more servers. You may install special software for this with many dependencies and lot of else soft. But why? You can create SSH key for master server and attach this key to other slave servers. Then you need only bash commands and thats all.
 
-```
+```sh
 cd ~
 git clone git@github.com:vladimirok5959/bash-empty-daemon.git
 cd bash-empty-daemon
 chmod 0744 run.sh
 ```
 
-```
+```sh
 ./run.sh
 ./run.sh (once|start|stop|status|update)
 ```
 
-```
+```sh
 ./run.sh once
 Loop. Every one second. Do something here...
 Loop. Every one second. Do something here...
@@ -21,21 +22,21 @@ Loop. Every one second. Do something here...
 ^C
 ```
 
-```
+```sh
 ./run.sh status
 Daemon is not runned
 ```
 
-```
+```sh
 ./run.sh start
 ```
 
-```
+```sh
 ./run.sh status
 Daemon is runned with pid = 18504
 ```
 
-```
+```sh
 cat ./logs/all.log
 Loop. Every one second. Do something here...
 Loop. Every one second. Do something here...
@@ -45,50 +46,59 @@ Loop. Every one second. Do something here...
 Loop. Every one second. Do something here...
 ```
 
-```
+```sh
 ./run.sh stop
 Daemon stoped
 ```
 
-```
+```sh
 ./run.sh once
 ```
+
 Will run script in non deamon mode. This is easy way to debug daemon body in file `loop.sh`, also you can simply shutdown daemon by pressing **Ctrl+C**.
 
-```
+```sh
 ./run.sh start
 ```
+
 Will run in daemon mode and you can safety close remote ssh connection.
 
-```
+```sh
 ./run.sh stop
 ```
+
 Will stop daemon.
 
-```
+```sh
 ./run.sh status
 ```
+
 Will show if daemon runned currently on not.
 
-```
+```sh
 ./run.sh update
 ```
+
 Self update. Get the latest daemon template from GIT and update main script. Auto update do not touched user scripts. Can be safety runned. Auto update will stop daemon, make updates and will run daemon automatically, if he was worked before updates.
 
 ## Where I can put my code?
+
 Look into file `scripts/example.sh`:
-```bash
+
+```sh
 #!/bin/sh
 
 # Example
 echo "Loop. Every one second. Do something here..."
 ```
+
 Contents of this file and any of \*.sh file in `script` folder will be fired every second and each time.
 
 ## Examples?
 
 1. Check for command on master server via file and create in `/tmp` dir on slave server file `time.txt` with time from master server.
-```bash
+
+```sh
 #!/bin/sh
 
 if [ -f "/tmp/command1.txt" ]; then
@@ -113,7 +123,8 @@ fi
 ```
 
 2. Check for command and make some simple changes on slave server.
-```bash
+
+```sh
 #!/bin/sh
 
 if [ -f "/tmp/command2.txt" ]; then
